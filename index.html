@@ -30,23 +30,23 @@ button,input,textarea{font:inherit}
 #stars{z-index:0}
 #lanterns{z-index:1}
 .star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;opacity:.25;animation:tw var(--d) ease-in-out var(--dl) infinite}
-@keyframes tw{50%{opacity:1;transform:scale(1.6)}}
+@keyframes tw{50%{opacity:1}}
 .moon{position:fixed;top:110px;left:7%;width:70px;height:70px;border-radius:50%;z-index:0;pointer-events:none;
   background:radial-gradient(circle at 35% 35%,#fffbe8,#f7e3a8 60%,#d9b86a);box-shadow:0 0 40px 12px rgba(255,236,170,.25);opacity:.85}
 .moon::after{content:"";position:absolute;inset:0;border-radius:50%;background:#14052e;transform:translate(22%,-10%);opacity:.92}
 .lantern{position:absolute;bottom:-90px;width:var(--w);height:calc(var(--w)*1.32);
   border-radius:42% 42% 22% 22%/38% 38% 18% 18%;
   background:radial-gradient(ellipse at 50% 72%,#fff6c4 0%,#ffbd4a 32%,#ff6a1a 72%,#a52c08 100%);
-  box-shadow:0 0 24px 8px rgba(255,150,40,.45),0 0 70px 24px rgba(255,120,30,.16);
+  box-shadow:0 0 22px 6px rgba(255,150,40,.4);will-change:transform,opacity;
   animation:rise var(--t) linear var(--dl) infinite;opacity:0}
 .lantern::before{content:"";position:absolute;top:18%;bottom:18%;left:50%;width:1px;background:rgba(120,40,0,.35);box-shadow:calc(var(--w)*-.22) 0 0 rgba(120,40,0,.3),calc(var(--w)*.22) 0 0 rgba(120,40,0,.3)}
 .lantern::after{content:"";position:absolute;bottom:-3px;left:30%;width:40%;height:5px;background:#5a1e05;border-radius:2px}
 @keyframes rise{
-  0%{transform:translate(0,0) rotate(-3deg);opacity:0}
+  0%{transform:translate3d(0,0,0);opacity:0}
   8%{opacity:.95}
-  50%{transform:translate(var(--sx),-62vh) rotate(4deg)}
+  50%{transform:translate3d(var(--sx),-62vh,0)}
   88%{opacity:.75}
-  100%{transform:translate(calc(var(--sx)*-.6),-128vh) rotate(-3deg);opacity:0}
+  100%{transform:translate3d(calc(var(--sx)*-.6),-128vh,0);opacity:0}
 }
 #fx{position:fixed;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
 
@@ -68,7 +68,7 @@ main{position:relative;z-index:3;min-height:100vh;display:flex;flex-direction:co
   text-align:center;padding:120px 16px 190px;gap:14px}
 .hero{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;max-width:900px}
 .rangoli{position:absolute;left:50%;top:50%;width:min(600px,96vw);aspect-ratio:1;transform:translate(-50%,-50%);
-  z-index:-1;opacity:0;filter:drop-shadow(0 0 14px rgba(255,170,60,.55));pointer-events:none}
+  z-index:-1;opacity:0;pointer-events:none;will-change:transform}
 .started .rangoli{animation:rgIn 2.4s ease .3s forwards,spin 80s linear infinite}
 @keyframes rgIn{to{opacity:.34}}
 @keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
@@ -77,9 +77,8 @@ h1{font-family:'Cinzel Decorative',serif;font-weight:900;font-size:clamp(46px,11
 h1 .word{display:inline-block;white-space:nowrap;margin:0 .12em}
 h1 .ch{display:inline-block;opacity:0;
   background:linear-gradient(100deg,#b86b00 0%,#ffd36b 22%,#fffaf0 32%,#ffb627 46%,#ff7a18 62%,#ffd36b 82%,#b86b00 100%);
-  background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
-  filter:drop-shadow(0 0 12px rgba(255,165,40,.6))}
-.started h1 .ch{animation:drop 1s cubic-bezier(.2,1.5,.4,1) calc(var(--i)*90ms + .35s) both,shimmer 4.5s linear calc(var(--i)*-.22s) infinite}
+  background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent}
+.started h1 .ch{animation:drop 1s cubic-bezier(.2,1.5,.4,1) calc(var(--i)*55ms + .2s) both,shimmer 2.2s ease-in-out calc(var(--i)*45ms + 1s) 1 both}
 @keyframes drop{0%{opacity:0;transform:translateY(-80px) scale(.4) rotate(-20deg)}100%{opacity:1;transform:none}}
 @keyframes shimmer{from{background-position:100% 0}to{background-position:-200% 0}}
 .cursive{font-family:'Great Vibes',cursive;font-size:clamp(26px,5vw,42px);color:#ffe3b0;text-shadow:0 0 12px rgba(255,120,80,.6)}
@@ -88,7 +87,7 @@ h1 .ch{display:inline-block;opacity:0;
 .from small{display:block;font-family:Poppins,sans-serif;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);opacity:.8}
 .reveal{opacity:0}
 .started .reveal{animation:fadeUp 1.1s ease var(--d,0s) both}
-@keyframes fadeUp{from{opacity:0;transform:translateY(24px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:none}}
 .divider{display:flex;align-items:center;gap:12px;color:var(--gold);width:min(420px,80vw)}
 .divider::before,.divider::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
 
@@ -98,13 +97,13 @@ h1 .ch{display:inline-block;opacity:0;
   transition:transform .2s,box-shadow .2s}
 .btn:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 10px 30px rgba(255,140,30,.6)}
 .btn:active{transform:scale(.97)}
-.btn.ghost{background:rgba(255,255,255,.06);color:var(--ink);border:1px solid var(--line);box-shadow:none;backdrop-filter:blur(6px)}
+.btn.ghost{background:rgba(255,255,255,.06);color:var(--ink);border:1px solid var(--line);box-shadow:none}
 .btn.ghost:hover{background:rgba(255,211,107,.14)}
 .btn:focus-visible,.icon-btn:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 .hint{font-size:13px;color:var(--muted);opacity:.7;letter-spacing:.04em}
 
 .icon-btn{position:fixed;top:16px;right:16px;z-index:6;width:46px;height:46px;border-radius:50%;cursor:pointer;font-size:20px;
-  border:1px solid var(--line);background:rgba(20,6,40,.7);color:var(--ink);backdrop-filter:blur(6px);display:grid;place-items:center}
+  border:1px solid var(--line);background:rgba(20,6,40,.7);color:var(--ink);display:grid;place-items:center}
 
 /* ---------- Diyas ---------- */
 .diyas{position:fixed;left:0;right:0;bottom:0;z-index:3;display:flex;justify-content:space-evenly;align-items:flex-end;
@@ -113,11 +112,11 @@ h1 .ch{display:inline-block;opacity:0;
 .diya{position:relative;width:var(--s,72px)}
 .diya svg{display:block;width:100%;height:auto;position:relative;z-index:2}
 .diya .glow{position:absolute;left:50%;bottom:40%;width:260%;aspect-ratio:1;transform:translate(-50%,40%);border-radius:50%;
-  background:radial-gradient(circle,rgba(255,180,60,.42),rgba(255,110,20,.12) 40%,transparent 70%);animation:pulse 2.6s ease-in-out infinite;z-index:0}
+  background:radial-gradient(circle,rgba(255,180,60,.42),rgba(255,110,20,.12) 40%,transparent 70%);z-index:0}
 .diya .flame{position:absolute;left:50%;bottom:68%;width:20%;aspect-ratio:1/2.3;margin-left:-10%;z-index:3;transform-origin:50% 100%;
   border-radius:50% 50% 50% 50%/62% 62% 38% 38%;
   background:radial-gradient(ellipse at 50% 78%,#fff 0 14%,#fff4a8 28%,#ffbe2e 52%,#ff5a00 78%,rgba(255,60,0,0) 100%);
-  filter:drop-shadow(0 0 8px #ffb02e) drop-shadow(0 0 18px rgba(255,120,0,.7));
+  box-shadow:0 0 10px 3px rgba(255,170,40,.55);will-change:transform;
   animation:flick 1.7s ease-in-out infinite;animation-delay:var(--fd,0s)}
 @keyframes flick{
   0%,100%{transform:scale(1,1) skewX(0)}
@@ -139,7 +138,7 @@ h1 .ch{display:inline-block;opacity:0;
 .splash-inner .btn{width:100%;max-width:320px}
 
 /* ---------- Wish maker modal ---------- */
-#maker{position:fixed;inset:0;z-index:15;display:grid;place-items:center;padding:16px;background:rgba(5,1,15,.65);backdrop-filter:blur(4px);
+#maker{position:fixed;inset:0;z-index:15;display:grid;place-items:center;padding:16px;background:rgba(5,1,15,.65);
   opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
 #maker.open{opacity:1;visibility:visible}
 .card{position:relative;width:min(480px,100%);max-height:calc(100vh - 32px);overflow:auto;padding:26px 22px 22px;border-radius:22px;text-align:left;
@@ -206,16 +205,16 @@ h1 .ch{display:inline-block;opacity:0;
     <p class="hindi reveal" style="--d:.1s">शुभ दीपावली</p>
     <p class="to reveal" id="toLine" style="--d:.2s" hidden></p>
     <h1 id="title" aria-label="Happy Diwali"></h1>
-    <p class="cursive reveal" style="--d:1.6s">Festival of Lights</p>
-    <div class="divider reveal" style="--d:1.8s" aria-hidden="true">✦ 🪔 ✦</div>
-    <p class="msg reveal" id="msg" style="--d:2s"></p>
-    <p class="from reveal" id="fromLine" style="--d:2.3s" hidden></p>
-    <div class="actions reveal" style="--d:2.6s">
+    <p class="cursive reveal" style="--d:.9s">Festival of Lights</p>
+    <div class="divider reveal" style="--d:1s" aria-hidden="true">✦ 🪔 ✦</div>
+    <p class="msg reveal" id="msg" style="--d:1.1s"></p>
+    <p class="from reveal" id="fromLine" style="--d:1.25s" hidden></p>
+    <div class="actions reveal" style="--d:1.4s">
       <button class="btn" id="finaleBtn">🎆 Grand Finale</button>
       <button class="btn ghost" id="makeBtn">✍️ Create Your Wish</button>
       <button class="btn ghost" id="shareBtn">🔗 Share</button>
     </div>
-    <p class="hint reveal" style="--d:3s">Tap anywhere in the sky to burst a cracker ✨</p>
+    <p class="hint reveal" style="--d:1.6s">Tap anywhere in the sky to burst a cracker ✨</p>
   </div>
 </main>
 
@@ -329,7 +328,7 @@ function shareText() {
 /* ================= Stars & lanterns ================= */
 (function buildSky() {
   const st = $('#stars'), frag = document.createDocumentFragment();
-  for (let i = 0; i < 140; i++) {
+  for (let i = 0; i < (innerWidth < 640 ? 35 : 55); i++) {
     const s = document.createElement('span');
     s.className = 'star';
     const sz = Math.random() < .15 ? 3 : Math.random() < .5 ? 2 : 1;
@@ -338,12 +337,12 @@ function shareText() {
   }
   st.appendChild(frag);
   if (reduceMotion) return;
-  const ln = $('#lanterns'), n = innerWidth < 640 ? 7 : 14;
+  const ln = $('#lanterns'), n = innerWidth < 640 ? 4 : 8;
   for (let i = 0; i < n; i++) {
     const l = document.createElement('div');
     l.className = 'lantern';
     const w = rand(18, 38);
-    l.style.cssText = `left:${rand(2, 96)}%;--w:${w}px;--t:${rand(20, 36).toFixed(1)}s;--dl:${rand(-30, 0).toFixed(1)}s;--sx:${rand(-80, 80).toFixed(0)}px;filter:blur(${w < 24 ? 1 : 0}px)`;
+    l.style.cssText = `left:${rand(2, 96)}%;--w:${w}px;--t:${rand(20, 36).toFixed(1)}s;--dl:${rand(-30, 0).toFixed(1)}s;--sx:${rand(-80, 80).toFixed(0)}px`;
     ln.appendChild(l);
   }
 })();
@@ -411,7 +410,7 @@ function buildToran() {
     const x = p * w;
     const y = 10 + sag * Math.abs(Math.sin(Math.PI * p * swags));
     html += `<span class="mg${i % 3 === 1 ? ' r' : ''}" style="left:${x}px;top:${y}px"></span>`;
-    if (i % 2 === 0 && i % Math.round(n / swags) !== 0) {
+    if (i % 4 === 2) {
       html += `<span class="leaf" style="left:${x}px;top:${y + 6}px;animation-delay:${(-i * .3).toFixed(1)}s"></span>`;
     }
   }
@@ -485,8 +484,9 @@ $('#soundBtn').addEventListener('click', () => setSound(!soundOn));
 const cv = $('#fx'), ctx = cv.getContext('2d');
 let W = 0, H = 0;
 function resize() {
-  const dpr = Math.min(devicePixelRatio || 1, 2);
   W = innerWidth; H = innerHeight;
+  // Fireworks are soft glows; full retina resolution costs 2-4x the pixels for no visible gain
+  const dpr = W < 768 ? 1 : Math.min(devicePixelRatio || 1, 1.25);
   cv.width = W * dpr; cv.height = H * dpr;
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 }
@@ -494,12 +494,32 @@ resize();
 let rt;
 addEventListener('resize', () => { resize(); clearTimeout(rt); rt = setTimeout(buildToran, 150); });
 
-const MAX_PARTS = innerWidth < 640 ? 1600 : 3200;
+const MOBILE = innerWidth < 640;
+const BASE_PARTS = MOBILE ? 900 : 1800;
+// Quality 0.3..1 scales particle counts; drops automatically on slow devices
+let Q = MOBILE ? .6 : .85;
+const QMAX = Q;
+const qn = n => Math.max(8, Math.round(n * Q));
 const HUES = [45, 30, 350, 320, 280, 200, 140, 15, 55];
 const rockets = [], parts = [], flashes = [], fountains = [], chakris = [];
 
+// Pre-rendered glow sprite (replaces per-frame radial gradients)
+const glow = document.createElement('canvas');
+glow.width = glow.height = 64;
+(() => {
+  const g = glow.getContext('2d'), gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+  gr.addColorStop(0, 'rgba(255,240,200,1)'); gr.addColorStop(.35, 'rgba(255,180,80,.45)'); gr.addColorStop(1, 'rgba(255,120,20,0)');
+  g.fillStyle = gr; g.fillRect(0, 0, 64, 64);
+})();
+function drawGlow(x, y, r, a) {
+  if (a <= .01) return;
+  ctx.globalAlpha = Math.min(1, a);
+  ctx.drawImage(glow, x - r, y - r, r * 2, r * 2);
+  ctx.globalAlpha = 1;
+}
+
 function addP(o) {
-  if (parts.length >= MAX_PARTS) return;
+  if (parts.length >= BASE_PARTS * Q) return;
   parts.push(Object.assign({
     x: 0, y: 0, vx: 0, vy: 0, a: 1, decay: .012, g: .045, fr: .976,
     w: 2, h: 45, s: 100, l: 62, trail: 3, flick: false, crackle: false, popped: false
@@ -524,57 +544,57 @@ function explode(x, y, hue, type) {
   const sp = rand(5, 7) * big;
   switch (type) {
     case 'peony':
-      for (let i = 0; i < 130; i++) {
+      for (let i = 0; i < qn(130); i++) {
         const a = rand(0, Math.PI * 2), s = sp * shell();
         addP({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, h: hue + rand(-12, 12), decay: rand(.01, .016) });
       }
       break;
     case 'multi': {
       const hs = [hue, pick(HUES), pick(HUES)];
-      for (let i = 0; i < 140; i++) {
+      for (let i = 0; i < qn(140); i++) {
         const a = rand(0, Math.PI * 2), s = sp * shell();
         addP({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, h: pick(hs), decay: rand(.009, .015), flick: Math.random() < .3 });
       }
       break;
     }
     case 'chrys':
-      for (let i = 0; i < 110; i++) {
+      for (let i = 0; i < qn(110); i++) {
         const a = rand(0, Math.PI * 2), s = sp * shell();
         addP({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, h: 42, s: 95, l: 70, decay: rand(.007, .011), trail: 5, w: 1.6, flick: true });
       }
       break;
     case 'ring': {
-      const n = 70, squash = rand(.35, 1), rot = rand(0, Math.PI);
+      const n = qn(70), squash = rand(.35, 1), rot = rand(0, Math.PI);
       for (let i = 0; i < n; i++) {
         const a = (i / n) * Math.PI * 2, s = sp * .9;
         const dx = Math.cos(a) * s, dy = Math.sin(a) * s * squash;
         addP({ x, y, vx: dx * Math.cos(rot) - dy * Math.sin(rot), vy: dx * Math.sin(rot) + dy * Math.cos(rot), h: hue, decay: .012, w: 2.4 });
       }
-      for (let i = 0; i < 30; i++) {
+      for (let i = 0; i < qn(30); i++) {
         const a = rand(0, Math.PI * 2), s = rand(0, 1.6);
         addP({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, h: 50, s: 30, l: 90, decay: .02, flick: true });
       }
       break;
     }
     case 'willow':
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < qn(100); i++) {
         const a = rand(0, Math.PI * 2), s = sp * .8 * shell();
         addP({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, h: 38, s: 90, l: 58, decay: rand(.0045, .007), g: .035, fr: .962, trail: 7, w: 1.7, flick: Math.random() < .5 });
       }
       break;
     case 'crackle':
-      for (let i = 0; i < 80; i++) {
+      for (let i = 0; i < qn(80); i++) {
         const a = rand(0, Math.PI * 2), s = sp * shell();
         addP({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, h: hue, decay: rand(.014, .02), crackle: true });
       }
       break;
     case 'double': {
       const h2 = pick(HUES);
-      for (let i = 0; i < 110; i++) {
+      for (let i = 0; i < qn(110); i++) {
         const a = rand(0, Math.PI * 2), s = sp * shell();
         addP({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, h: hue, decay: .012 });
       }
-      for (let i = 0; i < 50; i++) {
+      for (let i = 0; i < qn(50); i++) {
         const a = (i / 50) * Math.PI * 2, s = sp * .42;
         addP({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, h: h2, decay: .016, w: 2.2 });
       }
@@ -592,13 +612,13 @@ function explode(x, y, hue, type) {
       break;
     }
     case 'strobe':
-      for (let i = 0; i < 90; i++) {
+      for (let i = 0; i < qn(90); i++) {
         const a = rand(0, Math.PI * 2), s = sp * shell();
         addP({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, h: 0, s: 0, l: 100, decay: rand(.008, .012), flick: true, w: 2.2 });
       }
       break;
     case 'heart': {
-      const n = 90, sc = .3 * big;
+      const n = qn(90), sc = .3 * big;
       for (let i = 0; i < n; i++) {
         const t = (i / n) * Math.PI * 2;
         const hx = 16 * Math.pow(Math.sin(t), 3);
@@ -634,15 +654,13 @@ function update(f) {
   for (let i = fountains.length - 1; i >= 0; i--) {
     const fo = fountains[i]; fo.t += f;
     const life = fo.t / fo.life, k = Math.sin(Math.PI * Math.min(1, life));
-    const n = Math.round(5 * f * k + .4);
+    const n = Math.round(4 * Q * f * k + .4);
     const baseY = H - (W < 640 ? 46 : 56);
     for (let j = 0; j < n; j++) {
       addP({ x: fo.x + rand(-3, 3), y: baseY, vx: rand(-1.7, 1.7), vy: -rand(5, 9.5) * (.55 + .45 * k) * Math.min(1.2, H / 800 + .3),
         h: Math.random() < .5 ? 45 : 30, s: 100, l: rand(60, 90), decay: rand(.014, .028), g: .14, fr: .99, w: 1.5, trail: 2.5, flick: Math.random() < .4 });
     }
-    const gr = ctx.createRadialGradient(fo.x, baseY, 0, fo.x, baseY, 70);
-    gr.addColorStop(0, `rgba(255,200,90,${.35 * k})`); gr.addColorStop(1, 'rgba(255,120,20,0)');
-    ctx.fillStyle = gr; ctx.fillRect(fo.x - 70, baseY - 70, 140, 140);
+    drawGlow(fo.x, baseY, 70, .35 * k);
     if (fo.t > fo.life) fountains.splice(i, 1);
   }
   // chakris (spinning wheels)
@@ -652,17 +670,16 @@ function update(f) {
     for (let arm = 0; arm < 2; arm++) {
       const a = c.ang + arm * Math.PI;
       const px = c.x + Math.cos(a) * 9, py = c.y + Math.sin(a) * 9;
-      for (let j = 0; j < 3; j++) {
+      for (let j = 0; j < 2; j++) {
         const s = rand(3, 6) * k;
         addP({ x: px, y: py, vx: -Math.sin(a) * s + Math.cos(a) * 1.2, vy: Math.cos(a) * s + Math.sin(a) * 1.2, h: arm ? 120 : 45, l: 70, decay: rand(.04, .07), g: .06, w: 1.6, trail: 2 });
       }
     }
-    const gr = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, 50);
-    gr.addColorStop(0, `rgba(255,255,220,${.7 * k})`); gr.addColorStop(1, 'rgba(255,180,60,0)');
-    ctx.fillStyle = gr; ctx.fillRect(c.x - 50, c.y - 50, 100, 100);
+    drawGlow(c.x, c.y, 50, .7 * k);
     if (c.t > c.life) chakris.splice(i, 1);
   }
-  // particles
+  // particles: grouped by colour/alpha/width so each group is ONE stroke call
+  buckets.clear();
   for (let i = parts.length - 1; i >= 0; i--) {
     const p = parts[i];
     const fr = Math.pow(p.fr, f);
@@ -678,33 +695,51 @@ function update(f) {
     }
     if (p.a <= 0 || p.y > H + 20) { parts[i] = parts[parts.length - 1]; parts.pop(); continue; }
     if (p.flick && Math.random() < .45) continue;
-    ctx.strokeStyle = `hsla(${p.h},${p.s}%,${p.l}%,${p.a})`;
-    ctx.lineWidth = p.w;
+    const key = (Math.round(p.h / 10) * 10) + ',' + p.s + ',' + (Math.round(p.l / 10) * 10) + ',' + Math.ceil(p.a * 8) + ',' + p.w;
+    let b = buckets.get(key);
+    if (!b) { b = []; buckets.set(key, b); }
+    b.push(p.x - p.vx * p.trail, p.y - p.vy * p.trail, p.x, p.y);
+  }
+  for (const [key, b] of buckets) {
+    const k = key.split(',');
+    ctx.strokeStyle = `hsla(${k[0]},${k[1]}%,${k[2]}%,${k[3] / 8})`;
+    ctx.lineWidth = +k[4];
     ctx.beginPath();
-    ctx.moveTo(p.x - p.vx * p.trail, p.y - p.vy * p.trail);
-    ctx.lineTo(p.x, p.y);
+    for (let j = 0; j < b.length; j += 4) { ctx.moveTo(b[j], b[j + 1]); ctx.lineTo(b[j + 2], b[j + 3]); }
     ctx.stroke();
   }
   // flashes
   for (let i = flashes.length - 1; i >= 0; i--) {
     const fl = flashes[i];
-    const gr = ctx.createRadialGradient(fl.x, fl.y, 0, fl.x, fl.y, fl.r);
-    gr.addColorStop(0, `hsla(${fl.h},100%,85%,${fl.a})`); gr.addColorStop(1, `hsla(${fl.h},100%,60%,0)`);
-    ctx.fillStyle = gr; ctx.fillRect(fl.x - fl.r, fl.y - fl.r, fl.r * 2, fl.r * 2);
+    drawGlow(fl.x, fl.y, fl.r, fl.a);
     fl.a -= .06 * f;
     if (fl.a <= 0) flashes.splice(i, 1);
   }
 }
 
-let last = performance.now();
+const buckets = new Map();
+let last = performance.now(), avg = 16.7, idle = 0, tune = 0;
 function loop(now) {
-  const f = Math.min((now - last) / 16.667, 3); last = now;
+  const dt = now - last; last = now;
+  const f = Math.min(dt / 16.667, 3);
+  requestAnimationFrame(loop);
+  const busy = rockets.length || parts.length || flashes.length || fountains.length || chakris.length;
+  if (!busy) {
+    // nothing on screen: clear once, then sleep instead of repainting the full canvas every frame
+    if (idle++ === 30) ctx.clearRect(0, 0, W, H);
+    if (idle > 30) return;
+  } else idle = 0;
   ctx.globalCompositeOperation = 'destination-out';
   ctx.fillStyle = `rgba(0,0,0,${1 - Math.pow(.78, f)})`;
   ctx.fillRect(0, 0, W, H);
   ctx.globalCompositeOperation = 'lighter';
   update(f);
-  requestAnimationFrame(loop);
+  // auto-tune quality to the device's real frame rate
+  if (dt < 250) avg = avg * .95 + dt * .05;
+  if (++tune % 30 === 0) {
+    if (avg > 22 && Q > .3) Q = Math.max(.3, Q * .85);
+    else if (avg < 18 && Q < QMAX) Q = Math.min(QMAX, Q * 1.04);
+  }
 }
 requestAnimationFrame(loop);
 
@@ -716,7 +751,7 @@ function autoLaunch() {
     launch(rand(W * .1, W * .9), skyY());
     if (Math.random() < .25) setTimeout(() => launch(rand(W * .1, W * .9), skyY()), 180);
   }
-  setTimeout(autoLaunch, reduceMotion ? rand(2200, 3500) : rand(650, 1500));
+  setTimeout(autoLaunch, reduceMotion ? rand(2200, 3500) : MOBILE ? rand(1300, 2300) : rand(900, 1800));
 }
 function groundShow() {
   if (!document.hidden && started && !reduceMotion) {
@@ -730,7 +765,7 @@ function groundShow() {
   setTimeout(groundShow, rand(5000, 8000));
 }
 function finale() {
-  const n = W < 640 ? 14 : 24;
+  const n = W < 640 ? 9 : 16;
   for (let i = 0; i < n; i++) {
     setTimeout(() => launch(rand(W * .08, W * .92), skyY()), i * rand(90, 160));
   }
@@ -751,9 +786,9 @@ function start(withSound) {
   $('#splash').classList.add('hide');
   document.body.classList.add('started');
   setTimeout(() => {
-    for (let i = 0; i < 6; i++) setTimeout(() => launch(W * (.15 + i * .14), skyY()), i * 220);
-  }, 600);
-  setTimeout(() => explode(W / 2, H * .22, 345, 'heart'), 2600);
+    for (let i = 0; i < (MOBILE ? 3 : 5); i++) setTimeout(() => launch(W * (.15 + i * (MOBILE ? .35 : .17)), skyY()), i * 260);
+  }, 400);
+  setTimeout(() => explode(W / 2, H * .22, 345, 'heart'), 2200);
   setTimeout(() => { addFountain(W * .1); addFountain(W * .9); }, 1200);
   autoLaunch();
   setTimeout(groundShow, 6000);
